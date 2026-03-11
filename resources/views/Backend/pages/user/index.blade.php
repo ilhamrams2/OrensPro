@@ -1,132 +1,94 @@
 @extends('backend.main')
 
 @section('content')
-<div class="mb-8">
-    <div class="flex items-center gap-4 mb-2">
-        <a href="{{ route('users.index') }}" class="p-2 bg-white border border-gray-200 rounded-lg text-gray-600 hover:text-orange-600 transition-colors">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        </a>
-        <h1 class="text-2xl font-bold text-gray-900">{{ isset($user) ? 'Edit' : 'Tambah' }} Pengguna</h1>
+<div class="mb-8 flex items-center justify-between">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-900">Manajemen Pengguna</h1>
+        <p class="text-sm text-gray-500">Kelola data pengguna, role, dan akses sistem.</p>
     </div>
-    <p class="text-sm text-gray-500 ml-12">Lengkapi informasi akun dan data profil pengguna.</p>
+    <a href="{{ route('users.create') }}" class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+        <i data-lucide="user-plus" class="w-4 h-4"></i>
+        Tambah Pengguna
+    </a>
 </div>
 
-<form action="{{ isset($user) ? route('users.update', $user) : route('users.store') }}" method="POST" class="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
-    @csrf
-    @if(isset($user))
-        @method('PUT')
-    @endif
-
-    <div class="space-y-6">
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-            <h3 class="font-bold text-gray-800 border-b pb-4">Informasi Dasar</h3>
-            
-            <div class="space-y-2">
-                <label for="name" class="text-sm font-semibold text-gray-700">Username</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $user->name ?? '') }}" required
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all"
-                    placeholder="Contoh: jdoe">
-                @error('name') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <div class="space-y-2">
-                <label for="full_name" class="text-sm font-semibold text-gray-700">Nama Lengkap</label>
-                <input type="text" name="full_name" id="full_name" value="{{ old('full_name', $user->full_name ?? '') }}"
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all"
-                    placeholder="Masukkan nama lengkap">
-                @error('full_name') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <div class="space-y-2">
-                <label for="email" class="text-sm font-semibold text-gray-700">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email', $user->email ?? '') }}" required
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all"
-                    placeholder="email@contoh.com">
-                @error('email') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <div class="space-y-2">
-                <label for="phone" class="text-sm font-semibold text-gray-700">No. Telepon</label>
-                <input type="text" name="phone" id="phone" value="{{ old('phone', $user->phone ?? '') }}"
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all"
-                    placeholder="08xxxxxxxxxx">
-                @error('phone') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-            <h3 class="font-bold text-gray-800 border-b pb-4">Keamanan</h3>
-            <div class="space-y-2">
-                <label for="password" class="text-sm font-semibold text-gray-700">
-                    Password {{ isset($user) ? '(Kosongkan jika tidak ingin mengubah)' : '' }}
-                </label>
-                <input type="password" name="password" id="password" {{ isset($user) ? '' : 'required' }}
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all"
-                    placeholder="••••••••">
-                @error('password') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-            
-            <div class="flex items-center gap-3">
-                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }}
-                    class="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
-                <label for="is_active" class="text-sm font-medium text-gray-700 leading-none">Pengguna Aktif</label>
-            </div>
-        </div>
+<div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Pengguna</th>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kontak</th>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Role & Unit</th>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @forelse($users as $user)
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">{{ $user->full_name ?? $user->name }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $user->email }}</div>
+                        <div class="text-xs text-gray-500">{{ $user->phone ?? '-' }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col gap-1">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100 w-fit">
+                                {{ strtoupper(str_replace('_', ' ', $user->role)) }}
+                            </span>
+                            <div class="text-xs text-gray-500">
+                                {{ $user->organisation->name ?? 'No Org' }} / {{ $user->division->name ?? 'No Div' }}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        @if($user->is_active)
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Aktif
+                            </span>
+                        @else
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                Non-aktif
+                            </span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex justify-end gap-2">
+                            <a href="{{ route('users.edit', $user) }}" class="p-2 text-gray-400 hover:text-orange-600 transition-colors">
+                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                            </a>
+                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="p-2 text-gray-400 hover:text-red-600 transition-colors">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                        <div class="flex flex-col items-center gap-2">
+                            <i data-lucide="users" class="w-8 h-8 text-gray-300"></i>
+                            <p>Belum ada data pengguna.</p>
+                        </div>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-
-    <div class="space-y-6">
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-            <h3 class="font-bold text-gray-800 border-b pb-4">Role & Organisasi</h3>
-            
-            <div class="space-y-2">
-                <label for="role" class="text-sm font-semibold text-gray-700">Role</label>
-                <select name="role" id="role" required
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
-                    <option value="member" {{ old('role', $user->role ?? '') == 'member' ? 'selected' : '' }}>Member</option>
-                    <option value="leader" {{ old('role', $user->role ?? '') == 'leader' ? 'selected' : '' }}>Leader</option>
-                    <option value="admin" {{ old('role', $user->role ?? '') == 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="super_admin" {{ old('role', $user->role ?? '') == 'super_admin' ? 'selected' : '' }}>Super Admin</option>
-                </select>
-                @error('role') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <div class="space-y-2">
-                <label for="organisation_id" class="text-sm font-semibold text-gray-700">Organisasi</label>
-                <select name="organisation_id" id="organisation_id"
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
-                    <option value="">Pilih Organisasi...</option>
-                    @foreach($organisations as $org)
-                        <option value="{{ $org->id }}" {{ old('organisation_id', $user->organisation_id ?? '') == $org->id ? 'selected' : '' }}>
-                            {{ $org->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('organisation_id') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <div class="space-y-2">
-                <label for="division_id" class="text-sm font-semibold text-gray-700">Divisi</label>
-                <select name="division_id" id="division_id"
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
-                    <option value="">Pilih Divisi...</option>
-                    @foreach($divisions as $div)
-                        <option value="{{ $div->id }}" {{ old('division_id', $user->division_id ?? '') == $div->id ? 'selected' : '' }}>
-                            {{ $div->name }} ({{ $div->organisation->name ?? 'No Org' }})
-                        </option>
-                    @endforeach
-                </select>
-                @error('division_id') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-            </div>
-        </div>
-
-        <div class="flex items-center justify-end gap-3">
-            <a href="{{ route('users.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                Batal
-            </a>
-            <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-orange-200 transition-all active:scale-95">
-                Simpan Pengguna
-            </button>
-        </div>
-    </div>
-</form>
+</div>
 @endsection

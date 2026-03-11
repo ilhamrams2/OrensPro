@@ -27,8 +27,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'full_name' => 'nullable|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'role' => 'required|in:super_admin,admin,leader,member',
@@ -39,6 +38,7 @@ class UserController extends Controller
         ]);
 
         $data = $request->all();
+        $data['name'] = $request->full_name; // Sync name with full_name for DB constraint
         $data['password'] = Hash::make($request->password);
         $data['is_active'] = $request->has('is_active');
 
@@ -57,8 +57,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'full_name' => 'nullable|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:super_admin,admin,leader,member',
             'organisation_id' => 'nullable|exists:organisations,id',
@@ -68,6 +67,7 @@ class UserController extends Controller
         ]);
 
         $data = $request->all();
+        $data['name'] = $request->full_name; // Sync name with full_name for DB constraint
         if ($request->filled('password')) {
             $request->validate(['password' => 'min:8']);
             $data['password'] = Hash::make($request->password);

@@ -6,6 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     @vite('resources/css/app.css')
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <style>
+        .ts-control {
+            border-radius: 0.5rem !important;
+            padding: 0.5rem 1rem !important;
+            border-color: #d1d5db !important;
+        }
+        .ts-control:focus {
+            box-shadow: 0 0 0 2px #ea580c !important;
+            border-color: #ea580c !important;
+        }
+        .ts-dropdown {
+            border-radius: 0.5rem !important;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1) !important;
+        }
+        .ts-dropdown .active {
+            background-color: #fff7ed !important;
+            color: #c2410c !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900">
     <div class="flex h-screen overflow-hidden">
@@ -55,11 +75,11 @@
             <div class="p-4 border-t border-gray-100">
                 <div class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">
-                        A
+                        {{ strtoupper(substr(auth()->user()->full_name ?? auth()->user()->name, 0, 1)) }}
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900 truncate">Admin User</p>
-                        <p class="text-xs text-gray-500 truncate">admin@absenpro.com</p>
+                        <p class="text-sm font-medium text-gray-900 truncate">{{ auth()->user()->full_name ?? auth()->user()->name }}</p>
+                        <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
             </div>
@@ -108,9 +128,21 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+
+        // Initialize Tom Select for all .tom-select elements
+        document.querySelectorAll('.tom-select').forEach((el) => {
+            new TomSelect(el, {
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        });
 
         // Mobile sidebar toggle
         const toggleBtn = document.getElementById('toggle-sidebar');

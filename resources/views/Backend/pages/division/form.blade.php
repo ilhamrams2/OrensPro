@@ -22,7 +22,7 @@
             <div class="space-y-2">
                 <label for="organisation_id" class="text-sm font-semibold text-gray-700">Pilih Organisasi</label>
                 <select name="organisation_id" id="organisation_id" required
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all">
+                    class="tom-select w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all">
                     <option value="" disabled selected>Pilih Organisasi...</option>
                     @foreach($organisations as $org)
                         <option value="{{ $org->id }}" {{ old('organisation_id', $division->organisation_id ?? '') == $org->id ? 'selected' : '' }}>

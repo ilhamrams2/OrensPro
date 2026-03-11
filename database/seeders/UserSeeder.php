@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
             [
                 'organisation_id' => null,
-                'name' => 'superadmin',
+                'name' => 'Super Admin',
                 'full_name' => 'Super Admin',
                 'email' => 'superadmin@smkprestasiprima.sch.id',
                 'password' => Hash::make('password'),
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
 
             [
                 'organisation_id' => $solution->id,
-                'name' => 'admin.solution',
+                'name' => 'Admin Solution',
                 'full_name' => 'Admin Solution',
                 'email' => 'admin.solution@smkprestasiprima.sch.id',
                 'password' => Hash::make('password'),
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
 
             [
                 'organisation_id' => $network->id,
-                'name' => 'admin.network',
+                'name' => 'Admin Network',
                 'full_name' => 'Admin Network',
                 'email' => 'admin.network@smkprestasiprima.sch.id',
                 'password' => Hash::make('password'),
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
 
             [
                 'organisation_id' => $digital->id,
-                'name' => 'admin.digital',
+                'name' => 'Admin Digital',
                 'full_name' => 'Admin Digital',
                 'email' => 'admin.digital@smkprestasiprima.sch.id',
                 'password' => Hash::make('password'),
