@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+        }
         .ts-control {
             border-radius: 0.5rem !important;
             padding: 0.5rem 1rem !important;
@@ -39,16 +45,33 @@
             </div>
             
             <nav class="flex-1 px-4 py-4 space-y-6">
-                <!-- Group: Main -->
+                <!-- Group: Operasional -->
                 <div>
-                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Main Menu</p>
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('dashboard') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                        Dashboard
-                    </a>
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Operasional</p>
+                    <div class="space-y-1">
+                        @if(auth()->user()->role === 'member')
+                        <a href="{{ route('member.attendance.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('member.attendance.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                            <i data-lucide="user-check" class="w-4 h-4"></i>
+                            Presensi Mandiri
+                        </a>
+                        @endif
+
+                        @if(in_array(auth()->user()->role, ['super_admin', 'admin', 'leader']))
+                        <a href="{{ route('attendance-sessions.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('attendance-sessions.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                            <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                            Kehadiran
+                        </a>
+                        @endif
+                        
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            Laporan
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Group: Master Data -->
+                @if(in_array(auth()->user()->role, ['super_admin', 'admin', 'leader']))
+                <!-- Group: Master Data (Restricted to non-members) -->
                 <div>
                     <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Master Data</p>
                     <div class="space-y-1">
@@ -66,21 +89,7 @@
                         </a>
                     </div>
                 </div>
-
-                <!-- Group: Operasional -->
-                <div>
-                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Operasional</p>
-                    <div class="space-y-1">
-                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
-                            <i data-lucide="calendar" class="w-4 h-4"></i>
-                            Kehadiran
-                        </a>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
-                            <i data-lucide="file-text" class="w-4 h-4"></i>
-                            Laporan
-                        </a>
-                    </div>
-                </div>
+                @endif
 
                 <!-- Group: Sistem -->
                 <div>
@@ -100,7 +109,9 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-medium text-gray-900 truncate">{{ auth()->user()->full_name ?? auth()->user()->name }}</p>
-                            <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
+                            <p class="text-[10px] text-gray-500 truncate uppercase font-semibold">
+                                {{ auth()->user()->organisation->name ?? 'No Ekskul' }} • {{ auth()->user()->division->name ?? 'No Divisi' }}
+                            </p>
                         </div>
                     </div>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">

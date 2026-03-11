@@ -52,7 +52,6 @@ class UserSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        // Student (Anggota)
         User::create([
             'name' => 'Siswa Aktif',
             'full_name' => 'Budi Setiawan',
@@ -63,5 +62,27 @@ class UserSeeder extends Seeder
             'division_id' => $div->id,
             'is_active' => true,
         ]);
+
+        // Additional Members for Orens Solution
+        $members = [
+            ['name' => 'Ilham Ramadani', 'email' => 'ilham@smkprestasiprima.sch.id', 'div' => 'Website'],
+            ['name' => 'Rizky Fauzi', 'email' => 'rizky@smkprestasiprima.sch.id', 'div' => 'Cyber Security'],
+            ['name' => 'Siti Aminah', 'email' => 'siti@smkprestasiprima.sch.id', 'div' => 'Game Development'],
+            ['name' => 'Fajar Shidiq', 'email' => 'fajar@smkprestasiprima.sch.id', 'div' => 'E-sport'],
+            ['name' => 'Putri Lestari', 'email' => 'putri@smkprestasiprima.sch.id', 'div' => 'Website'],
+        ];
+
+        foreach ($members as $m) {
+            User::create([
+                'name' => explode(' ', $m['name'])[0],
+                'full_name' => $m['name'],
+                'email' => $m['email'],
+                'password' => Hash::make('password'),
+                'role' => 'member',
+                'organisation_id' => $org->id,
+                'division_id' => Division::where('name', $m['div'])->first()->id ?? $div->id,
+                'is_active' => true,
+            ]);
+        }
     }
 }

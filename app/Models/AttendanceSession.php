@@ -10,6 +10,7 @@ class AttendanceSession extends Model
 
     protected $fillable = [
         'organisation_id',
+        'division_id',
         'title',
         'qr_token',
         'session_date',
@@ -24,6 +25,11 @@ class AttendanceSession extends Model
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
     }
 
     public function attendances()

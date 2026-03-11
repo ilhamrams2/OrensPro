@@ -41,6 +41,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            if (Auth::user()->role === 'member') {
+                return redirect()->route('member.attendance.index');
+            }
+
             return redirect()->intended('/');
         }
 
