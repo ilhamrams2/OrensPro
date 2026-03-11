@@ -19,13 +19,21 @@
             </div>
             
             <nav class="flex-1 px-4 py-4 space-y-1">
-                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg bg-orange-50 text-orange-600 transition-colors">
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('dashboard') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                     Dashboard
                 </a>
-                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
+                <a href="{{ route('users.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('users.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
                     <i data-lucide="users" class="w-4 h-4"></i>
-                    Karyawan
+                    Manajemen User
+                </a>
+                <a href="{{ route('organisations.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('organisations.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                    <i data-lucide="building-2" class="w-4 h-4"></i>
+                    Manajemen Organisasi
+                </a>
+                <a href="{{ route('divisions.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('divisions.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                    Manajemen Divisi
                 </a>
                 <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
                     <i data-lucide="calendar" class="w-4 h-4"></i>
