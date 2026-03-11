@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Organisation;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Organisation;
+use App\Models\Division;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,60 +15,53 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $solution = Organisation::where('name','Orens Solution')->first();
-        $network = Organisation::where('name','Network')->first();
-        $digital = Organisation::where('name','Digital')->first();
+        $org = Organisation::first();
+        $div = Division::where('organisation_id', $org->id)->first();
 
-        User::insert([
+        // Super Admin (Developer/System)
+        User::create([
+            'name' => 'Admin Orens',
+            'full_name' => 'Administrator OrensPro',
+            'email' => 'admin@smkprestasiprima.sch.id',
+            'password' => Hash::make('password'),
+            'role' => 'super_admin',
+            'is_active' => true,
+        ]);
 
-            [
-                'organisation_id' => null,
-                'name' => 'Super Admin',
-                'full_name' => 'Super Admin',
-                'email' => 'superadmin@smkprestasiprima.sch.id',
-                'password' => Hash::make('password'),
-                'role' => 'super_admin',
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+        // School Admin (Pembina)
+        User::create([
+            'name' => 'Pembina Pramuka',
+            'full_name' => 'Drs. Haji Slamet',
+            'email' => 'pembina@smkprestasiprima.sch.id',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+            'organisation_id' => $org->id,
+            'division_id' => $div->id, // Pramuka
+            'is_active' => true,
+        ]);
 
-            [
-                'organisation_id' => $solution->id,
-                'name' => 'Admin Solution',
-                'full_name' => 'Admin Solution',
-                'email' => 'admin.solution@smkprestasiprima.sch.id',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+        // Leader (Ketua Ekskul)
+        User::create([
+            'name' => 'Ketua Basket',
+            'full_name' => 'Andika Pratama',
+            'email' => 'ketua@smkprestasiprima.sch.id',
+            'password' => Hash::make('password'),
+            'role' => 'leader',
+            'organisation_id' => $org->id,
+            'division_id' => Division::where('name', 'Basket')->first()->id ?? $div->id,
+            'is_active' => true,
+        ]);
 
-            [
-                'organisation_id' => $network->id,
-                'name' => 'Admin Network',
-                'full_name' => 'Admin Network',
-                'email' => 'admin.network@smkprestasiprima.sch.id',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-
-            [
-                'organisation_id' => $digital->id,
-                'name' => 'Admin Digital',
-                'full_name' => 'Admin Digital',
-                'email' => 'admin.digital@smkprestasiprima.sch.id',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
-
+        // Student (Anggota)
+        User::create([
+            'name' => 'Siswa Aktif',
+            'full_name' => 'Budi Setiawan',
+            'email' => 'siswa@smkprestasiprima.sch.id',
+            'password' => Hash::make('password'),
+            'role' => 'member',
+            'organisation_id' => $org->id,
+            'division_id' => $div->id,
+            'is_active' => true,
         ]);
     }
 }

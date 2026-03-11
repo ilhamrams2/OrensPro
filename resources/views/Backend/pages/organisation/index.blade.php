@@ -3,12 +3,12 @@
 @section('content')
 <div class="mb-8 flex items-center justify-between">
     <div>
-        <h1 class="text-2xl font-bold text-gray-900">Manajemen Organisasi</h1>
-        <p class="text-sm text-gray-500">Kelola daftar organisasi yang terdaftar di sistem.</p>
+        <h1 class="text-2xl font-bold text-gray-900">Manajemen Ekstrakurikuler</h1>
+        <p class="text-sm text-gray-500">Kelola daftar ekstrakurikuler utama.</p>
     </div>
     <a href="{{ route('organisations.create') }}" class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
         <i data-lucide="plus" class="w-4 h-4"></i>
-        Tambah Organisasi
+        Tambah Ekskul
     </a>
 </div>
 
@@ -36,7 +36,7 @@
                             <a href="{{ route('organisations.edit', $org) }}" class="p-2 text-gray-400 hover:text-orange-600 transition-colors">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </a>
-                            <form action="{{ route('organisations.destroy', $org) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus organisasi ini?')">
+                            <form action="{{ route('organisations.destroy', $org) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ekskul ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2 text-gray-400 hover:text-red-600 transition-colors">
@@ -50,8 +50,8 @@
                 <tr>
                     <td colspan="3" class="px-6 py-12 text-center text-gray-500">
                         <div class="flex flex-col items-center gap-2">
-                            <i data-lucide="folder-open" class="w-8 h-8 text-gray-300"></i>
-                            <p>Belum ada data organisasi.</p>
+                            <i data-lucide="puzzle" class="w-8 h-8 text-gray-300"></i>
+                            <p>Belum ada data ekskul.</p>
                         </div>
                     </td>
                 </tr>

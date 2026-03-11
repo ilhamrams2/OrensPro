@@ -38,49 +38,79 @@
                 <span class="text-xl font-bold tracking-tight text-gray-800">AbsenPro</span>
             </div>
             
-            <nav class="flex-1 px-4 py-4 space-y-1">
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('dashboard') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    Dashboard
-                </a>
-                <a href="{{ route('users.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('users.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
-                    <i data-lucide="users" class="w-4 h-4"></i>
-                    Manajemen User
-                </a>
-                <a href="{{ route('organisations.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('organisations.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
-                    <i data-lucide="building-2" class="w-4 h-4"></i>
-                    Manajemen Organisasi
-                </a>
-                <a href="{{ route('divisions.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('divisions.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
-                    <i data-lucide="layers" class="w-4 h-4"></i>
-                    Manajemen Divisi
-                </a>
-                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
-                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                    Kehadiran
-                </a>
-                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
-                    <i data-lucide="file-text" class="w-4 h-4"></i>
-                    Laporan
-                </a>
-                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    Sistem
+            <nav class="flex-1 px-4 py-4 space-y-6">
+                <!-- Group: Main -->
+                <div>
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Main Menu</p>
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('dashboard') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
                 </div>
-                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
-                    <i data-lucide="settings" class="w-4 h-4"></i>
-                    Pengaturan
-                </a>
+
+                <!-- Group: Master Data -->
+                <div>
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Master Data</p>
+                    <div class="space-y-1">
+                        <a href="{{ route('organisations.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('organisations.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                            <i data-lucide="puzzle" class="w-4 h-4"></i>
+                            Ekstrakurikuler
+                        </a>
+                        <a href="{{ route('divisions.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('divisions.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                            <i data-lucide="layers" class="w-4 h-4"></i>
+                            Divisi
+                        </a>
+                        <a href="{{ route('users.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('users.*') ? 'bg-orange-50 text-orange-600' : 'text-gray-600 hover:bg-gray-50 hover:text-orange-600' }} transition-colors">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                            Anggota
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Group: Operasional -->
+                <div>
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Operasional</p>
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                            Kehadiran
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            Laporan
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Group: Sistem -->
+                <div>
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-2">Sistem</p>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-orange-600 transition-colors">
+                        <i data-lucide="settings" class="w-4 h-4"></i>
+                        Pengaturan
+                    </a>
+                </div>
             </nav>
 
             <div class="p-4 border-t border-gray-100">
-                <div class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">
-                        {{ strtoupper(substr(auth()->user()->full_name ?? auth()->user()->name, 0, 1)) }}
+                <div class="bg-gray-50 rounded-xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold shrink-0">
+                            {{ strtoupper(substr(auth()->user()->full_name ?? auth()->user()->name, 0, 1)) }}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-900 truncate">{{ auth()->user()->full_name ?? auth()->user()->name }}</p>
+                            <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
+                        </div>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900 truncate">{{ auth()->user()->full_name ?? auth()->user()->name }}</p>
-                        <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email }}</p>
-                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                    <button type="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+                        class="p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all"
+                        title="Keluar">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
         </aside>

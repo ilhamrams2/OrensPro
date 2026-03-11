@@ -3,12 +3,12 @@
 @section('content')
 <div class="mb-8 flex items-center justify-between">
     <div>
-        <h1 class="text-2xl font-bold text-gray-900">Manajemen Pengguna</h1>
-        <p class="text-sm text-gray-500">Kelola data pengguna, role, dan akses sistem.</p>
+        <h1 class="text-2xl font-bold text-gray-900">Manajemen Anggota</h1>
+        <p class="text-sm text-gray-500">Kelola data siswa, pembina, dan akses sistem.</p>
     </div>
     <a href="{{ route('users.create') }}" class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
         <i data-lucide="user-plus" class="w-4 h-4"></i>
-        Tambah Pengguna
+        Tambah Anggota
     </a>
 </div>
 
@@ -17,9 +17,9 @@
         <table class="w-full text-left">
             <thead class="bg-gray-50 border-b border-gray-200">
                 <tr>
-                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Pengguna</th>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Anggota</th>
                     <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kontak</th>
-                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Role & Unit</th>
+                    <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Ekskul & Divisi</th>
                     <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                     <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
                 </tr>
@@ -47,7 +47,7 @@
                                 {{ strtoupper(str_replace('_', ' ', $user->role)) }}
                             </span>
                             <div class="text-xs text-gray-500">
-                                {{ $user->organisation->name ?? 'No Org' }} / {{ $user->division->name ?? 'No Div' }}
+                                {{ $user->division->name ?? 'Independen' }} ({{ $user->organisation->name ?? 'Umum' }})
                             </div>
                         </div>
                     </td>
@@ -67,7 +67,7 @@
                             <a href="{{ route('users.edit', $user) }}" class="p-2 text-gray-400 hover:text-orange-600 transition-colors">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                             </a>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">
+                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data anggota ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-2 text-gray-400 hover:text-red-600 transition-colors">
@@ -82,7 +82,7 @@
                     <td colspan="5" class="px-6 py-12 text-center text-gray-500">
                         <div class="flex flex-col items-center gap-2">
                             <i data-lucide="users" class="w-8 h-8 text-gray-300"></i>
-                            <p>Belum ada data pengguna.</p>
+                            <p>Belum ada data anggota.</p>
                         </div>
                     </td>
                 </tr>
